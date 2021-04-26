@@ -13,10 +13,7 @@ In this lab you will:
 
 - Learn how to setup the M5Stack
 - Register a thing in AWS IoT Core
-- Create a Rule in AWS IoT Core
-- Create a TimeStream DB in AWS
-- Visualize TimeStream Data in Grafana
-- Code using UI Flow in Blocky or MicroPython
+- Publish data to AWS over MQTT
 
 Requirements:
 
@@ -34,9 +31,7 @@ optionally any IOT device that can communicate over MQTT protocol and send data 
 
 [https://m5stack.hackster.io/products/env-ii-unit-with-temperature-humidity-pressure-sensor-sht30-bmp280](https://m5stack.hackster.io/products/env-ii-unit-with-temperature-humidity-pressure-sensor-sht30-bmp280)
 
-- **A Grafana account**
 
-[https://grafana.com/](https://grafana.com/)
 
 # **CHAPTER 1: Setting up the device**
 
@@ -280,94 +275,20 @@ The labels we need our as follows:
 
 ![](RackMultipart20210426-4-15d0ali_html_5873af015a72198c.png)
 
-**Coding the solution**
-
-1. Setting up connection to AWS
-
-![](RackMultipart20210426-4-15d0ali_html_3bf416fd9cb23ffb.png)
-
-  1. After setup add the AWS connection block and put in the following values as required:
-    1. **Init things name:** Add the name with which you had registered your thing in AWS. In our case the name was &quot;EnvThing&quot;
-    2. **Host:** This is the endpoint to which you will be connecting to. This can be found by going to the AWS IoT Core dashboard.
-      1. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Things** , and then click on the name of your thing **(&quot;Envthing&quot;).**
-      2. In the side navigation pane of your thing choose **Interact.**
-      3. Copy and paste the endpoint given under HTTPS
-
-![](RackMultipart20210426-4-15d0ali_html_f9e304cbd060b5a9.png)
-    1. **Port:** Put in 8883 as the port number. (8883 is the default port number for a secure mqtt connection)
-    2. **Keepalive:** This is the time for which the connection is to be kept alive. We took a large number like 300 so that the connection is active for a longer period of time.
-    3. Hit the plus button to add files. Add the private key and certificate that we had downloaded while registering the thing.
-    4. **Keyfile:** From the drop down list select the added private key file.
-    5. **certFile:** From the drop down list select the added certificate key file.
-
-  1. Add the AWS Start block
-
-2. Coding the business logic
-
-![](RackMultipart20210426-4-15d0ali_html_4dd925884a556cf5.png)
-
-3. Final code
-
-**Blocky Code**
-
-![](RackMultipart20210426-4-15d0ali_html_cb0c201cfe412d65.png)
-
-**MicroPython Code**
-```
-**from** m5stack **import** \*
-**from** m5stack\_ui **import** \*
-**from** uiflow **import** \*
-**from** IoTcloud.AWS **import** AWS
-**import** json
-
-**import** unit
-
- screen = M5Screen()
- screen.clean\_screen()
- screen.set\_screen\_bg\_color(0x000000)
- env20 = unit.get(unit.ENV2, unit.PORTA)
-
- env = None
-
- label0 = M5Label(&#39;T :&#39;, x=75, y=30, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label1 = M5Label(&#39;P : &#39;, x=75, y=110, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label2 = M5Label(&#39;H :&#39;, x=75, y=190, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label3 = M5Label(&#39;23&#39;, x=150, y=30, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label4 = M5Label(&#39;900&#39;, x=150, y=110, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label5 = M5Label(&#39;52.73&#39;, x=150, y=190, color=0xffffff, font=FONT\_MONT\_48, parent=None)
- label6 = M5Label(&#39;2021-04-26 16:53:14 Mon&#39;, x=0, y=0, color=0xffffff, font=FONT\_MONT\_14, parent=None)
-
- aws = AWS(things\_name=&#39;EnvThing&#39;, host=&#39;a1zerv8ymde1w8-ats.iot.us-east-1.amazonaws.com&#39;, port=8883, keepalive=3000, cert\_file\_path=&quot;/flash/res/890a3328c5-certificate.pem.crt&quot;, private\_key\_path=&quot;/flash/res/890a3328c5-private.pem.key&quot;)
- aws.start()
- rtc.settime(&#39;ntp&#39;, host=&#39;us.pool.ntp.org&#39;, tzone=0)
-**while** True:
- label6.set\_text(str(rtc.printRTCtime()))
- label3.set\_text(str(env20.temperature))
- label4.set\_text(str(env20.pressure))
- label5.set\_text(str(env20.humidity))
- env = {&#39;temperature&#39;:(env20.temperature),&#39;pressure&#39;:(env20.pressure),&#39;humidity&#39;:(env20.humidity),&#39;device\_id&#39;:&#39;sensor\_02&#39;,&#39;time&#39;:(rtc.printRTCtime())}
-**if** (env20.temperature) \&gt; 24:
- rgb.setColorAll(0xff0000)
-**else** :
- rgb.setColorAll(0x33cc00)
- aws.publish(str(&#39;EnvThing/env/pub&#39;),str((json.dumps(env))))
- wait\_ms(2)
- ```
-
+2. Clone or download the file named GetSensorData.m5f
+3. Click on the hamburger menu and hit open and choose the GetSensorData.m5f file.
 4. Hit the run button on the top right of the UIFlow IDE.
-
 5. You should be able to see the values for temperature, humidity, pressure and the time being constantly updated.
 
-**Checking to see if your device is publishing to AWS over MQTT**
+# **Checking to see if your device is publishing to AWS over MQTT** #
 
-1. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Test** , and then choose  **MQTT test client**.
+1.	In the AWS IoT console, in the side navigation pane, choose Test, and then choose MQTT test client.
 
-2. In the subscribe to a topic section, enter the topic filter from the code:
+2.	In the subscribe to a topic section, enter the topic filter from the code:
+“EnvThing/env/pub” and hit Subscribe.
 
-&quot;EnvThing/env/pub&quot; and hit Subscribe.
-
-3. You should be able to see data constantly being sent and the output should look like this:
-
-![](RackMultipart20210426-4-15d0ali_html_5bc983eea5a3fa77.png)
-
+3.	You should be able to see data constantly being sent and the output should look like this: 
+ ![image](https://user-images.githubusercontent.com/30550056/116152131-88d5c580-a6b3-11eb-8792-03e1b194c18c.png)
 We have therefore successfully written our code, ran the code on the M5Stack and published data to AWS over MQTT.
+
+
