@@ -66,12 +66,12 @@ Links to download the required software:
 
 In our case we will be downloading the UIFlow\_Core2 latest version to burn onto the M5Stack
 
-1. Then connect the M5 device to the computer through the Type-C cable, select the corresponding COM port (For MAC devices the port may read something like /dev/tty.SLAB\_USBtoUART), the baud rate can use the default configuration in M5Burner,
+2. Then connect the M5 device to the computer through the Type-C cable, select the corresponding COM port (For MAC devices the port may read something like /dev/tty.SLAB\_USBtoUART), the baud rate can use the default configuration in M5Burner,
 
     - ④ Click Erase on the right to erase Flash, close the current page when finished.
     - ⑤ Click &quot;Burn&quot; to start burning, you can input WIFI configuration information during burning.
 
-1. When the burning log prompts  **Burn Successfully** , it means that the firmware has been burned.
+3. When the burning log prompts  **Burn Successfully** , it means that the firmware has been burned.
 
 **Configuring the WIFI on the M5Stack**
 
@@ -79,19 +79,19 @@ In our case we will be downloading the UIFlow\_Core2 latest version to burn onto
 
 ![](RackMultipart20210426-4-15d0ali_html_f622af03a893e4d1.png)
 
-1. After entering the main page, press the  **Setup**  button on the screen.
+2. After entering the main page, press the  **Setup**  button on the screen.
 
 ![](RackMultipart20210426-4-15d0ali_html_880211372ac5fff2.png)
 
-1. In the  **WiFi**  option, press the start button of the config Wi-Fi by web option, and the device will automatically restart, where selected Wi-Fi is the last connected WiFi.
+3. In the  **WiFi**  option, press the start button of the config Wi-Fi by web option, and the device will automatically restart, where selected Wi-Fi is the last connected WiFi.
 
 ![](RackMultipart20210426-4-15d0ali_html_4e2a0a04a7c7bf3e.png)
 
-1. After the device jumps, the WiFi Config page will be displayed.
+4. After the device jumps, the WiFi Config page will be displayed.
 
 ![](RackMultipart20210426-4-15d0ali_html_103b7c00493da354.png)
 
-1. Follow the prompts to connect to the SSID hotspot through the WiFi of the mobile phone or computer.
+5. Follow the prompts to connect to the SSID hotspot through the WiFi of the mobile phone or computer.
   1. Open the browser to visit  **192.168.4.1** and enter the WiFi information in the pop-up page to configure the network successfully.
   2. After the configuration is successful, the device will automatically restart. And enter the programming mode.
 
@@ -111,9 +111,9 @@ _Enter the SSID (Name of the WIFI) and password of the Wifi you want to connect 
 
 Note: Network programming mode is a docking mode between M5 device and UIFlow web programming platform. The screen will show the current network connection status of the device. When the indicator is green, it means that you can receive program push at any time. Under default situation, after the first successful WiFi network configuration, the device will automatically restart and enter the network programming mode
 
-1. Follow the instructions displayed on the device and go to [flow.m5stack.com](http://flow.m5stack.com/) on your computer
+2. Follow the instructions displayed on the device and go to [flow.m5stack.com](http://flow.m5stack.com/) on your computer
 
-1. Type in the matching API Key into UIFlow and select the device type.
+3. Type in the matching API Key into UIFlow and select the device type.
 
 ![](RackMultipart20210426-4-15d0ali_html_72df91ef0d0db8a1.png)
 
@@ -129,27 +129,27 @@ Note: Network programming mode is a docking mode between M5 device and UIFlow we
 
 1. After you create your account in AWS, login to the console and navigate to the AWS IOT Core Dashboard.
 
-1. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Manage** , and then choose  **Things**.
+2. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Manage** , and then choose  **Things**.
 
-1. If a  **You don&#39;t have any things yet**  dialog box is displayed, choose  **Register a thing**. Otherwise, choose  **Create**.
+3. If a  **You don&#39;t have any things yet**  dialog box is displayed, choose  **Register a thing**. Otherwise, choose  **Create**.
 
-1. On the  **Creating AWS IoT things**  page, choose  **Create a single thing**.
+4. On the  **Creating AWS IoT things**  page, choose  **Create a single thing**.
 
-1. On the  **Add your device to the device registry**  page, enter a name for your IoT thing (for this example enter the following as your device name, &quot; **EnvThing&quot;** ), and then choose  **Next**.
+5. On the  **Add your device to the device registry**  page, enter a name for your IoT thing (for this example enter the following as your device name, &quot; **EnvThing&quot;** ), and then choose  **Next**.
 
 You can&#39;t change the name of a thing after you create it. To change a thing&#39;s name, you must create a new thing, give it the new name, and then delete the old thing.
 
 1. On the  **Add a certificate for your thing**  page, choose  **Create certificate**.
 
-1. Choose the  **Download**  links to download the certificate for the thing with the extension \*\*\*\*\*\*.cert.pem, and the private key. We will be using these certificates later.
+2. Choose the  **Download**  links to download the certificate for the thing with the extension \*\*\*\*\*\*.cert.pem, and the private key. We will be using these certificates later.
 
 **Important: This is the only time you can download your certificate and private key.**
 
 1. Choose  **Activate**.
 
-1. Choose  **Attach a policy**.
+2. Choose  **Attach a policy**.
 
-1. For now, we will not attach any policy and Choose **Register a thing.**
+3. For now, we will not attach any policy and Choose **Register a thing.**
 
 **Reference link for Registering a thing**
 
@@ -167,7 +167,7 @@ In the project we will create a policy that allows us to connect with AWS, and p
 6. Replace \&lt;ThingName\&gt; with the name you gave your thing while registering it in the previous step (In our case the name is **EnvThing).**
 
 Code to Copy:
-
+```
 {
  &quot;Version&quot;: &quot;2012-10-17&quot;,
  &quot;Statement&quot;: [
@@ -195,9 +195,9 @@ Code to Copy:
  }
  ]
  }
-
+```
 Example Code:
-
+```
 {
  &quot;Version&quot;: &quot;2012-10-17&quot;,
  &quot;Statement&quot;: [
@@ -225,7 +225,7 @@ Example Code:
  }
  ]
  }
-
+```
 **Attaching the created Policy to the certificate**
 
 1. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Secure** , and then choose  **Certificates**.
@@ -252,13 +252,13 @@ With the thing registered, certificates downloaded, and the relevant policies at
 
 1. After connecting the M5Stack to UIFlow in chapter 1 we are now ready program, just hit the **refresh device status** button ![](RackMultipart20210426-4-15d0ali_html_c701b7dd72cf6279.png) in the status bar on the bottom to verify that the device is still connected.
 
-1. Connect the ENV II sensor to the Port A of the M5 Stack using the grove cable provided. (Port A is the port besides the charging port and it&#39;s the only Port the sensor will work on)
+2. Connect the ENV II sensor to the Port A of the M5 Stack using the grove cable provided. (Port A is the port besides the charging port and it&#39;s the only Port the sensor will work on)
 
-1. In the UI Flow screen click on the **+** sign below **Units**
+3. In the UI Flow screen click on the **+** sign below **Units**
 
 ![](RackMultipart20210426-4-15d0ali_html_f78f6ce0bc33f365.png)
 
-1. ![](RackMultipart20210426-4-15d0ali_html_7c75bbb8a965dcba.png)
+![](RackMultipart20210426-4-15d0ali_html_7c75bbb8a965dcba.png)
 
 **Setting up the layout**
 
@@ -301,18 +301,18 @@ The labels we need our as follows:
 
   1. Add the AWS Start block
 
-1. Coding the business logic
+2. Coding the business logic
 
 ![](RackMultipart20210426-4-15d0ali_html_4dd925884a556cf5.png)
 
-1. Final code
+3. Final code
 
 **Blocky Code**
 
 ![](RackMultipart20210426-4-15d0ali_html_cb0c201cfe412d65.png)
 
 **MicroPython Code**
-
+```
 **from** m5stack **import** \*
 **from** m5stack\_ui **import** \*
 **from** uiflow **import** \*
@@ -351,20 +351,21 @@ The labels we need our as follows:
  rgb.setColorAll(0x33cc00)
  aws.publish(str(&#39;EnvThing/env/pub&#39;),str((json.dumps(env))))
  wait\_ms(2)
+ ```
 
-1. Hit the run button on the top right of the UIFlow IDE.
+4. Hit the run button on the top right of the UIFlow IDE.
 
-1. You should be able to see the values for temperature, humidity, pressure and the time being constantly updated.
+5. You should be able to see the values for temperature, humidity, pressure and the time being constantly updated.
 
 **Checking to see if your device is publishing to AWS over MQTT**
 
 1. In the [AWS IoT console](https://console.aws.amazon.com/iot/home), in the side navigation pane, choose  **Test** , and then choose  **MQTT test client**.
 
-1. In the subscribe to a topic section, enter the topic filter from the code:
+2. In the subscribe to a topic section, enter the topic filter from the code:
 
 &quot;EnvThing/env/pub&quot; and hit Subscribe.
 
-1. You should be able to see data constantly being sent and the output should look like this:
+3. You should be able to see data constantly being sent and the output should look like this:
 
 ![](RackMultipart20210426-4-15d0ali_html_5bc983eea5a3fa77.png)
 
