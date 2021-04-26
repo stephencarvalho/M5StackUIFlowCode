@@ -169,62 +169,64 @@ In the project we will create a policy that allows us to connect with AWS, and p
 Code to Copy:
 ```
 {
- &quot;Version&quot;: &quot;2012-10-17&quot;,
- &quot;Statement&quot;: [
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Connect&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot:\&lt;Region-Name\&gt;:\&lt;Account-No\&gt;:client/\&lt;ThingName\&gt;&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Subscribe&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot: :\&lt;Region-Name\&gt;:\&lt;Account-No\&gt;:topicfilter/\&lt;ThingName\&gt;/sub&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Receive&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot: :\&lt;Region-Name\&gt;:\&lt;Account-No\&gt;:topic/\&lt;ThingName\&gt;/sub&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Publish&quot;,
- &quot;Resource&quot;: [
-&quot;arn:aws:iot: :\&lt;Region-Name\&gt;:\&lt;Account-No\&gt;:topic/\&lt;ThingName\&gt;/env/pub&quot;
- ]
- }
- ]
- }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "arn:aws:iot:<Region-Name>:<Account-No>:client/<ThingName>"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Subscribe",
+      "Resource": "arn:aws:iot: :<Region-Name>:<Account-No>:topicfilter/<ThingName>/sub"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Receive",
+      "Resource": "arn:aws:iot: :<Region-Name>:<Account-No>:topic/<ThingName>/sub"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": [
+        "arn:aws:iot: :<Region-Name>:<Account-No>:topic/<ThingName>/env/pub"
+      ]
+    }
+  ]
+}
+
 ```
 Example Code:
 ```
 {
- &quot;Version&quot;: &quot;2012-10-17&quot;,
- &quot;Statement&quot;: [
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Connect&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot:us-east-1:945484123456:client/EnvThing&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Subscribe&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot:us-east-1: 945484123456:topicfilter/EnvThing/sub&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Receive&quot;,
- &quot;Resource&quot;: &quot;arn:aws:iot:us-east-1: 945484123456:topic/EnvThing/sub&quot;
- },
- {
- &quot;Effect&quot;: &quot;Allow&quot;,
- &quot;Action&quot;: &quot;iot:Publish&quot;,
- &quot;Resource&quot;: [
-&quot;arn:aws:iot:us-east-1: 945484123456:topic/EnvThing/env/pub&quot;
- ]
- }
- ]
- }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "iot:Connect",
+      "Resource": "arn:aws:iot:us-east-1:945484123456:client/EnvThing"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Subscribe",
+      "Resource": "arn:aws:iot:us-east-1: 945484123456:topicfilter/EnvThing/sub"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Receive",
+      "Resource": "arn:aws:iot:us-east-1: 945484123456:topic/EnvThing/sub"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": [
+        "arn:aws:iot:us-east-1: 945484123456:topic/EnvThing/env/pub"
+      ]
+    }
+  ]
+}
+
 ```
 **Attaching the created Policy to the certificate**
 
@@ -292,7 +294,6 @@ The labels we need our as follows:
       3. Copy and paste the endpoint given under HTTPS
 
 ![](RackMultipart20210426-4-15d0ali_html_f9e304cbd060b5a9.png)
-
     1. **Port:** Put in 8883 as the port number. (8883 is the default port number for a secure mqtt connection)
     2. **Keepalive:** This is the time for which the connection is to be kept alive. We took a large number like 300 so that the connection is active for a longer period of time.
     3. Hit the plus button to add files. Add the private key and certificate that we had downloaded while registering the thing.
